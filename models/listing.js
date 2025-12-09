@@ -1,21 +1,29 @@
 const mongoose = require("mongoose");
-const Schema= mongoose.Schema;
+const Schema = mongoose.Schema;
 
+const listingSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: String,
 
-const listingSchema= new Schema({
-    title:{
-        type: String,
-        required: true,
+  image: {
+    filename: {
+      type: String,
+      default: "default-listing.jpg"
     },
-    description: String,
-   image: {
-  filename: String,
-  url: String
-},
-    price: Number,
-    location: String,
-    country : String,
+    url: {
+      type: String,
+      default:
+        "https://in.pinterest.com/narasimharaotatiparthi/pretty-flowers/"
+    }
+  },
+
+  price: Number,
+  location: String,
+  country: String,
 });
 
-const Listing= mongoose.model("Listing", listingSchema);
-module.exports= Listing;
+const Listing = mongoose.model("Listing", listingSchema);
+module.exports = Listing;
