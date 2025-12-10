@@ -48,9 +48,6 @@ app.post("/listings", async (req,res)=>{
  console.log(listing);
 });
 
-
-
-
 ///SHOW ROUTE
 app.get("/listings/:id", async (req,res)=>{
      let {id}= req.params;

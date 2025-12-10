@@ -8,17 +8,17 @@ const listingSchema = new Schema({
   },
   description: String,
 
-  image: {
-    filename: {
-      type: String,
-      default: "default-listing.jpg"
-    },
-    url: {
-      type: String,
-      default:
-        "https://in.pinterest.com/narasimharaotatiparthi/pretty-flowers/"
-    }
+ image: {
+  filename: {
+    type: String,
+    default: "default-listing.jpg"
   },
+  url: {
+    type: String,
+    default:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+  }
+},
 
   price: Number,
   location: String,
