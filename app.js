@@ -65,15 +65,15 @@ app.get("/listings/new", (req,res)=>{
 });
 
 
-///create ROUTE
 app.post("/listings", validateListing,
-  wrapAsync ( async (req,res,next)=>{
-  const newlisting= new Listing(req.body.listing); 
-     await newlisting.save();
-        res.redirect("/listings");
- console.log(listing);
-})
-  );
+  wrapAsync(async (req,res) => {
+    const newListing = new Listing(req.body.listing); 
+    await newListing.save();
+    console.log("New Listing saved:", newListing);
+    res.redirect("/listings");
+  })
+);
+
 
 ///SHOW ROUTE
 app.get("/listings/:id",  wrapAsync ( async (req,res)=>{
