@@ -64,7 +64,7 @@ app.get("/listings/new", (req,res)=>{
     res.render("listings/new.ejs"); 
 });
 
-
+///CREATE NEW ROUTE
 app.post("/listings", validateListing,
   wrapAsync(async (req,res) => {
     const newListing = new Listing(req.body.listing); 
