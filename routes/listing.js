@@ -61,6 +61,10 @@ router.post("/", validateListing,
 router.get("/:id/edit",  wrapAsync ( async (req,res)=>{
     let {id}= req.params;
     const listing =await Listing.findById(id);
+    if(!listing){
+       req.flash("error", " This Listing does not exist!!");
+       res.redirect("/listings");
+    }
     res.render("listings/edit.ejs", {listing});
 }));
 
