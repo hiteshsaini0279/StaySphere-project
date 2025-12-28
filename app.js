@@ -9,7 +9,9 @@ const session =require("express-session");
 const listings= require("./routes/listing.js");
 const reviews= require("./routes/review.js");
 const flash= require("connect-flash");
-
+const passport=require("passport");
+const LocalStrategy=require("passport-local");
+const User=require("./models/user.js");
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 async function main(){
     await mongoose.connect(MONGO_URL);
@@ -46,6 +48,14 @@ app.get("/",(req,res)=>{
 
 app.use(session(sessionOptions));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use( new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next)=>{
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
