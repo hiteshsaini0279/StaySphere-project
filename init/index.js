@@ -9,13 +9,14 @@ async function main(){
 }
 
 main().then(()=>{
-    console.log("connected to our mongo wanderlust database");
+    console.log("connected to our mongo Staysphere database");
 }).catch((err)=>{
     console.log(err);
 });
 
 const initDB=async()=>{
     await Listing.deleteMany({});
+     initData.data= initData.data.map((obj)=>({...obj,owner:"6952503d7a8af9c277863291",}));
     await Listing.insertMany(initData.data);
     console.log("data was initialized");
 };
