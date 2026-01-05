@@ -19,7 +19,7 @@ req.login(registeredUser, (err)=>{
     return next(err);
  }
 req.flash("success","Welcome to StaySphere");
-res.redirect(req.session.redirectUrl);
+ res.redirect(req.session.redirectUrl || "/listings");
 }); 
 }catch(e){
     req.flash("error", e.message);
