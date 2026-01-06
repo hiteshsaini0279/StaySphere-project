@@ -27,14 +27,36 @@ module.exports.showListing= async (req,res)=>{
     res.render("listings/show.ejs", {listing});
 };
 
-module.exports.createNewListing= async (req,res) => {
-    const newListing = new Listing(req.body.listing); 
-    newListing.owner=req.user._id;
+module.exports.createNewListing = async (req, res) => {
+  try {
+    const newListing = new Listing(req.body.listing);
+
+    // ✅ owner (safe)
+    newListing.owner = req.user._id;
+
+    // ✅ image (CRITICAL FIX)
+    if (req.file) {
+      newListing.image = {
+        url: req.file.path,
+        filename: req.file.filename,
+      };
+    } else {
+      req.flash("error", "Image upload failed. Please try again.");
+      return res.redirect("/listings/new");
+    }
+
     await newListing.save();
-    req.flash("success", "New listing created!!");
+
     console.log("New Listing saved:", newListing);
+    req.flash("success", "New listing created!");
     res.redirect("/listings");
-  };
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Something went wrong while creating listing");
+    res.redirect("/listings");
+  }
+};
+
 
   module.exports.renderEditForm= async (req,res)=>{
       let {id}= req.params;
