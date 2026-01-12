@@ -2,7 +2,11 @@
     const map = new mapboxgl.Map({
       container: 'map',
       style: "mapbox://styles/mapbox/streets-v12",
-      center: [75.79, 26.91], // starting position [lng, lat]
+      center: listing.geometry.coordinates, // starting position [lng, lat]
       zoom: 10   // starting zoom
     });
  
+    const marker = new mapboxgl.Marker({color: "red"})
+      .setLngLat(listing.geometry.coordinates)
+      .setPopup( new mapboxgl.Popup({offset:25}).setHTML(`<h4>${listing.location}</h4><P>Exact location will be provided after Booking </P>`))
+      .addTo(map);  
