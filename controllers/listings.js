@@ -43,7 +43,7 @@ module.exports.createNewListing = async (req, res) => {
 let savedaaa=  await newListing.save();
 console.log(savedaaa);
   req.flash("success", " New Listing created!!");
-  res.redirect("/listings");
+ return res.redirect("/listings");
 };
 
 
