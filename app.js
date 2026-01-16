@@ -19,7 +19,6 @@ const listingRouter= require("./routes/listing.js");
 const reviewRouter= require("./routes/review.js");
 const userRouter= require("./routes/user.js");
 
-// const MONGO_URL="mongodb://127.0.0.1:27017/Staysphere";
 const dbUrl= process.env.ATLAS_DB;
 async function main(){
     await mongoose.connect(dbUrl);
@@ -41,7 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto:{
-        secret:"mysecretcode",
+        secret: process.env.SECRET,
     },
     touchAfter: 24*3600,
 });
@@ -51,7 +50,7 @@ store.on("error", ()=>{
 
 const sessionOptions={
     store:store,
-    secret:"mysecretcode",
+    secret: process.env.SECRET,
     resave:false,
     saveUninitialized: true,
     cookie:{
@@ -76,9 +75,9 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
+     res.locals.currUser=req.user;
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
-    res.locals.currUser=req.user;
     next();
 });
 app.use("/listings", listingRouter);
